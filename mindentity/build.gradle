@@ -1,0 +1,66 @@
+
+
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "https://repo.spring.io/plugins-release" }
+    }
+
+    dependencies {
+        classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:1.2.5'
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.1.RELEASE")
+    }
+}
+
+
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'tomcat'
+apply plugin: 'war'
+apply plugin: 'io.spring.dependency-management'
+
+
+
+
+version = '1.0'
+
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'io.spring.platform:platform-bom:1.1.3.RELEASE'
+    }
+}
+
+
+dependencies {
+
+	compile('org.springframework.boot:spring-boot-starter-web')
+	testCompile('org.springframework.boot:spring-boot-starter-test') 
+    compile "org.springframework.data:spring-data-jpa"
+    
+    compile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+         // JSR-303 validation
+    compile "javax.validation:validation-api"
+    compile "org.hibernate:hibernate-validator"
+    
+
+    
+     // JPA Persistence
+    compile "commons-dbcp:commons-dbcp"
+    compile "org.hibernate:hibernate-entitymanager"
+    runtime "com.h2database:h2"
+
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+}
+
